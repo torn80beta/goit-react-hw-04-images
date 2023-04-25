@@ -1,7 +1,7 @@
 import React from 'react';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
-import { Modal } from './Modal/Modal';
+// import { Modal } from './Modal/Modal';
 import { toast, ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PropTypes from 'prop-types';
@@ -21,22 +21,22 @@ class App extends Component {
     loading: false,
     error: null,
     query: '',
-    modalOpen: false,
-    largeImgUrl: '',
-    tags: '',
+    // modalOpen: false,
+    // largeImgUrl: '',
+    // tags: '',
   };
 
-  openModal = (url, tags) => {
-    this.setState(({ modalOpen }) => ({
-      modalOpen: !modalOpen,
-      largeImgUrl: url,
-      tags: tags,
-    }));
-  };
+  // openModal = (url, tags) => {
+  //   this.setState(({ modalOpen }) => ({
+  //     modalOpen: !modalOpen,
+  //     largeImgUrl: url,
+  //     tags: tags,
+  //   }));
+  // };
 
-  closeModal = () => {
-    this.setState({ modalOpen: false });
-  };
+  // closeModal = () => {
+  //   this.setState({ modalOpen: false });
+  // };
 
   onSearchFormSubmit = searchQuery => {
     this.setState(
@@ -100,7 +100,8 @@ class App extends Component {
     return (
       <>
         <Searchbar onSubmit={this.onSearchFormSubmit} />
-        <ImageGallery data={this.state.data} onImageClick={this.openModal} />
+        <ImageGallery data={this.state.data} />
+        {/* onImageClick={this.openModal} */}
         {this.state.loading && (
           <StyledLoadSpinner>
             <ThreeDots
@@ -120,7 +121,7 @@ class App extends Component {
         )}
         {error && <h2 style={{ textAlign: 'center' }}>{error}</h2>}
         <ToastContainer transition={Zoom} />
-        {this.state.modalOpen && (
+        {/* {this.state.modalOpen && (
           <Modal closeModal={this.closeModal}>
             <img
               className="modal-image"
@@ -128,7 +129,7 @@ class App extends Component {
               alt={this.state.tags}
             />
           </Modal>
-        )}
+        )} */}
         <ScrollUpButton />
       </>
     );
@@ -143,9 +144,9 @@ Searchbar.propTypes = {
 
 ImageGallery.propTypes = {
   data: PropTypes.array.isRequired,
-  onImageClick: PropTypes.func.isRequired,
+  // onImageClick: PropTypes.func.isRequired,
 };
 
-Modal.propTypes = {
-  closeModal: PropTypes.func.isRequired,
-};
+// Modal.propTypes = {
+//   closeModal: PropTypes.func.isRequired,
+// };

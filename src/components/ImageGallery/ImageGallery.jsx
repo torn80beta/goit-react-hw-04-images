@@ -1,53 +1,32 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyledImageGalleryUl } from './ImageGallery.styled';
 import { ImageGalleryItem } from '../ImageGalleryItem/ImageGalleryItem';
 import { scroll } from 'utils/scroll';
 import PropTypes from 'prop-types';
 
-class ImageGallery extends Component {
-  state = {
-    data: [],
-  };
+const ImageGallery = ({ data }) => {
+  const [images, setImages] = useState([]);
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.data !== this.props.data) {
-      this.setState({
-        data: this.props.data,
-      });
-    }
-
-    if (
-      this.state.data &&
-      this.state.data.length > 0 &&
-      prevState.data !== this.state.data
-    ) {
+  useEffect(() => {
+    setImages(data);
+    if (images.length > 15) {
       scroll();
     }
-  }
+  }, [data, images]);
 
-  render() {
-    const { data } = this.state;
-    const { onImageClick } = this.props;
-
-    return (
-      <>
-        <StyledImageGalleryUl className="gallery">
-          {data &&
-            data.map(item => (
-              <ImageGalleryItem
-                key={item.id}
-                data={item}
-                onImageClick={onImageClick}
-              />
-            ))}
-        </StyledImageGalleryUl>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <StyledImageGalleryUl className="gallery">
+        {images &&
+          images.map(item => <ImageGalleryItem key={item.id} data={item} />)}
+      </StyledImageGalleryUl>
+    </>
+  );
+  // }
+};
 
 export default ImageGallery;
 
 ImageGalleryItem.propTypes = {
-  onImageClick: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired,
 };
