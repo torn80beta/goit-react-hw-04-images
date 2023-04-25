@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { urlCreator } from 'components/App';
 import {
@@ -8,16 +8,13 @@ import {
   StyledSearchButton,
 } from './Searchbar.styled';
 import PropTypes from 'prop-types';
-const { Component } = require('react');
 
-class Searchbar extends Component {
-  state = {
-    query: '',
-  };
+const Searchbar = ({ onSubmit }) => {
+  const [query, setQuery] = useState('');
 
-  handleSearchSubmit = e => {
+  const handleSearchSubmit = e => {
     e.preventDefault();
-    if (this.state.query === '') {
+    if (query === '') {
       toast.info('Enter your search query, please!', {
         position: 'top-center',
         autoClose: 2000,
@@ -26,51 +23,37 @@ class Searchbar extends Component {
       return;
     }
     urlCreator.resetPage();
-    this.props.onSubmit(this.state.query);
-    this.setState({ query: '' });
-    // console.log(onSubmit);
+    onSubmit(query);
+    setQuery('');
   };
 
-  handleSearchChange = e => {
-    // console.log(e.currentTarget.value);
-    // const searchQuery = e.currentTarget.elements.searchQuery.value;
-    this.setState(
-      { query: e.currentTarget.value.trim().toLowerCase() }
-      // , () =>
-      // console.log(this.state)
-    );
+  const handleSearchChange = e => {
+    setQuery(e.currentTarget.value.trim().toLowerCase());
   };
 
-  render() {
-    return (
-      <header id="top" className="searchbar">
-        <StyledSearForm onSubmit={this.handleSearchSubmit}>
-          <StyledLogo>PiXplorer</StyledLogo>
-          <StyledInput
-            type="text"
-            name="searchQuery"
-            autocomplete="off"
-            autoFocus
-            placeholder="Search images and photos..."
-            value={this.state.query}
-            onChange={this.handleSearchChange}
-          />
-          <StyledSearchButton className="button" type="submit">
-            Search
-          </StyledSearchButton>
-        </StyledSearForm>
-      </header>
-    );
-  }
-}
+  return (
+    <header id="top" className="searchbar">
+      <StyledSearForm onSubmit={handleSearchSubmit}>
+        <StyledLogo>PiXplorer</StyledLogo>
+        <StyledInput
+          type="text"
+          name="searchQuery"
+          autocomplete="off"
+          autoFocus
+          placeholder="Search images and photos..."
+          value={query}
+          onChange={handleSearchChange}
+        />
+        <StyledSearchButton className="button" type="submit">
+          Search
+        </StyledSearchButton>
+      </StyledSearForm>
+    </header>
+  );
+};
 
 export default Searchbar;
 
-StyledInput.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
-};
-
-StyledSearForm.propTypes = {
+Searchbar.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
