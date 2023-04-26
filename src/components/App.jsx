@@ -70,7 +70,7 @@ const App = () => {
   return (
     <>
       <Searchbar onSubmit={onSearchFormSubmit} />
-      <ImageGallery data={{ data: data, totalHits: totalHits }} />
+      <ImageGallery props={{ data: data, totalHits: totalHits }} />
       {loading && (
         <StyledLoadSpinner>
           <ThreeDots

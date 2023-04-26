@@ -5,7 +5,7 @@ import { scroll } from 'utils/scroll';
 import { endNotification } from 'utils/endNotification';
 import PropTypes from 'prop-types';
 
-const ImageGallery = ({ data: { data, totalHits } }) => {
+const ImageGallery = ({ props: { data, totalHits } }) => {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
@@ -28,11 +28,13 @@ const ImageGallery = ({ data: { data, totalHits } }) => {
       </StyledImageGalleryUl>
     </>
   );
-  // }
 };
 
 export default ImageGallery;
 
-ImageGalleryItem.propTypes = {
-  data: PropTypes.object.isRequired,
+ImageGallery.propTypes = {
+  props: PropTypes.shape({
+    data: PropTypes.array.isRequired,
+    totalHits: PropTypes.number.isRequired,
+  }).isRequired,
 };
