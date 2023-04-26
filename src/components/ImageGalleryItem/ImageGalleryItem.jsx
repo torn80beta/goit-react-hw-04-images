@@ -27,10 +27,10 @@ export const ImageGalleryItem = ({
 
   useEffect(() => {
     if (isModalOpen) {
-      console.log('Modal is mounted');
+      // console.log('Modal is mounted');
       window.addEventListener('keydown', handleEscKeydown);
       return () => {
-        console.log('Modal is unmounted');
+        // console.log('Modal is unmounted');
         window.removeEventListener('keydown', handleEscKeydown);
       };
     }
