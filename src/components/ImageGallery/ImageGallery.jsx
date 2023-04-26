@@ -2,17 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { StyledImageGalleryUl } from './ImageGallery.styled';
 import { ImageGalleryItem } from '../ImageGalleryItem/ImageGalleryItem';
 import { scroll } from 'utils/scroll';
+import { endNotification } from 'utils/endNotification';
 import PropTypes from 'prop-types';
 
-const ImageGallery = ({ data }) => {
+const ImageGallery = ({ data: { data, totalHits } }) => {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
-    setImages(data);
+    if (data.length > 0) {
+      setImages(data);
+    }
     if (images.length > 15) {
       scroll();
     }
-  }, [data, images]);
+    if (images.length > 0 && images.length === totalHits) {
+      endNotification();
+    }
+  }, [data, images, totalHits]);
 
   return (
     <>
